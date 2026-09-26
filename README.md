@@ -1,7 +1,45 @@
 # REST API Basics and Interview Questions
 
-1.Difference between SOAP and REST API
---------------------------------------
+### What is an API and how does it work
+
+An API (Application Programming Interface) is a software intermediary that allows two distinct applications to interact and share data with one another.
+
+**How it works:** It follows a Client-Server architecture. A client sends an explicit request (payload/parameters) over a network protocol (like HTTP) to a specific endpoint. The server processes the request, communicates with a database if necessary, and returns an HTTP response containing a status code and data.
+
+### What is the difference between an API and a Web Service
+
+Primary difference is that all web services are APIs, but not all APIs are web services. A Web Service is a specific type of API that strictly requires a network connection and relies on web protocols (like HTTP or SOAP) to exchange data or to communicate between machines. An API (Application Programming Interface) is a broader umbrella term representing any interface that allows two software components to talk to each other, whether they are on the same local device or spread across the internet.
+
+**Protocol Support:** API (Any protocol e.g., HTTP, gRPC, WebSockets, local OS system calls, file inputs), Web Service (Strictly web protocols e.g., HTTP/HTTPS, SOAP).
+
+**Data Format:** API (Highly flexible. Supports JSON, XML, YAML, binary streams, or plain text), Web Service (Relies heavily on XML (especially for SOAP) or JSON for RESTful variations).
+
+### What do you understand by RESTful Web Services
+
+RESTful Web Services are a way of designing and developing web services that use REST (Representational State Transfer) principles. They enable applications to communicate over the web using standard HTTP methods, such as GET, POST, PUT and DELETE. REST is lightweight, stateless and widely used in modern web and mobile applications. 
+
+REST (Representational State Transfer) is an architectural style used to design distributed systems using the HTTP protocol. To be truly RESTful, an API must adhere to key constraints:
+
+**How RESTful Web Services Work:** 
+
+**Define Messaging in terms of RESTful web services:** Here, messaging refers to the exchange of data between a client and a server via standard HTTP protocols. Because REST is stateless, every communication transaction is fully self-contained within two types of messages: the HTTP Request (sent by the client) and the HTTP Response (returned by the server).
+
+These messages consist of two primary parts: Metadata (information about the data or the connection) and Message Data/Payload (the actual content being transferred).
+
+### What are the main HTTP methods used in REST APIs
+
+**GET**: Retrieves data from the server. (Safe & Idempotent)
+
+**POST**: Sends data to the server to create a new resource. (Neither safe nor idempotent)
+**PUT:** Replaces an entire target resource with the uploaded payload, or creates it if it doesn't exist. (Not safe but Idempotent)
+**DELETE:**  Removes a specified resource from the server. (Idempotent)
+**PATCH:** Performs a partial modification or update to an existing resource. (non-idempotent)
+OPTIONS: This fetches the list of supported options of resources present on the server.
+
+### What is the Difference Between PUT, POST, and PATCH in RESTful API
+
+### Difference between SOAP and REST API
+
 SOAP (Simple Object Access Protocol) and REST -> two distinct approaches to building web services, facilitating communication between different applications.
 SOAP -> standardized messaging protocol , exclusively uses XML for message formatting. Can operate over various transport protocols, including HTTP, SMTP,
 TCP, and JMS. Can be stateful (maintaining session information between requests) or stateless, depending on the implementation. Complex to develop.
