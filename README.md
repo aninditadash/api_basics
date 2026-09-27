@@ -28,24 +28,39 @@ These messages consist of two primary parts: Metadata (information about the dat
 
 ### What are the main HTTP methods used in REST APIs
 
-**GET**: Retrieves data from the server. (Safe & Idempotent)
+HTTP request methods (also known as HTTP verbs) define the primary action a client wants to perform on a server-side resource. They map closely to typical CRUD (Create, Read, Update, Delete) database operations.
 
-**POST**: Sends data to the server to create a new resource. (Neither safe nor idempotent)
-**PUT:** Replaces an entire target resource with the uploaded payload, or creates it if it doesn't exist. (Not safe but Idempotent)
-**DELETE:**  Removes a specified resource from the server. (Idempotent)
-**PATCH:** Performs a partial modification or update to an existing resource. (non-idempotent)
+The core HTTP methods are categorized based on their technical behaviors, specifically whether they are Safe (do not modify server state) or Idempotent (making multiple identical requests yields the same server state).
+
+**GET**: Retrieves the current representation of a resource without altering data. Data parameters are passed directly via the URL. (Safe, Idempotent and Cacheable)
+
+**POST**: Submits new data enclosed within the request body to create a new resource or trigger server-side processing. (Neither safe nor idempotent, Cacheable is conditional)
+
+**PUT:** Replaces the entire target resource with the new request payload. If the resource doesn't exist, it creates it. (Not safe, Idempotent and Not cacheable)
+
+**DELETE:**  Removes the specified resource entirely from the target server. (Not safe, Idempotent and Not cacheable)
+
+**PATCH:** Applies partial modifications to a resource, so we need to send the fields we wish to change. (Neither safe nor idempotent, Cacheable is conditional)
+
 OPTIONS: This fetches the list of supported options of resources present on the server.
 
 ### What is the Difference Between PUT, POST, and PATCH in RESTful API
 
 ### Difference between SOAP and REST API
 
-SOAP (Simple Object Access Protocol) and REST -> two distinct approaches to building web services, facilitating communication between different applications.
-SOAP -> standardized messaging protocol , exclusively uses XML for message formatting. Can operate over various transport protocols, including HTTP, SMTP,
-TCP, and JMS. Can be stateful (maintaining session information between requests) or stateless, depending on the implementation. Complex to develop.
-RESTful API (Representational State Transfer) is an architectural style for designing networked applications. Primarily relies on HTTP and its methods 
-for performing operations on resources. Is inherently stateless. Simpler to develop.
+REST (Representational State Transfer) and SOAP (Simple Object Access Protocol) are the two most common methods for client-server communication. REST is an architectural style with flexible design guidelines, while SOAP is a official protocol with strict rules, often used in complex enterprise systems.
 
+**Data Format:** SOAP is XML only, data must be packaged in a rigid XML structure. REST is flexible, supports JSON, XML, HTML, and plain text.
+
+**Design Focus:** SOAP is Function-driven, exposes operations or actions (e.g., CreateEmployee). REST is Resource-driven:, Exposes data resources via URLs (e.g., `/employees`).
+
+**Operations:** SOAP uses an interface contract defined by a WSDL file and requests typically use POST. REST uses standard HTTP methods directly (GET, POST, PUT, DELETE).
+
+**State:** Stateful or Stateless: Can store and track client interactions between requests.Stateless: Every request is entirely independent and self-contained.CachingNot supported natively: Responses cannot be cached easily.Built-in: Supports HTTP caching, significantly improving speed and efficiency.SecurityBuilt-in enterprise security standards like WS-Security (encryption and digital signatures).Relies on transport layer security (HTTPS) and token authorization (OAuth, JWT).TransactionsBuilt-in compliance for ACID transactions (highly reliable for multi-step bank transfers).Limited transactional support; managing state-heavy steps requires client-side software.PerformanceHeavier and slower: Large XML envelopes consume more bandwidth and CPU to process.Lightweight and faster: Minimal payload overhead (especially with JSON).
+
+When to Use SOAPSOAP is highly structured and ideal for legacy enterprise environments. Choose SOAP for:Financial and Banking Services: Where ACID compliance is necessary to ensure transactions never fail silently or partially.High-Security Systems: Applications requiring bank-grade, end-to-end encryption and token validation via WS-Security.Stateful Operations: Systems that need to track consecutive, multi-step actions across a distributed network.🌐 When to Use RESTREST dominates the modern web because it is easy to build, scale, and consume. Choose REST for:Public Web APIs & Mobile Apps: Lightweight JSON payloads save bandwidth and process quickly on mobile devices.Microservices: Ideal for building decoupled, independent, and stateless cloud applications.Scalable Web Performance: Direct integration with HTTP allows data to be cached at the browser or CDN level, reducing server loads.
+
+https://www.google.com/search?q=Difference+between+SOAP+and+REST+API&rlz=1C5FPAB_enIN1189IN1189&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCDE3MTFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UfVcuk_CN5lZ7ooDDWHK2MvRnkJCfpKMCXqclK-P4WAh82d25jqGtbeY99CshApuFApJdhBniVRKv_-rylb_ASjcXJYoQ2hox6HVTmY1M1uLkVuRADjuugOu2Tw38WgSDDphzX2mMJEqRuZd6SsW6lkNPUO2A&aep=10&ntc=1&sxsrf=APpeQnvEXWuFxJb6PqKUc7sX1XXCOj8ylg%3A1790477912302&mstk=AUtExfBtuVtYlvqI05_B5ggjDJBzYdFDFa3xTgfqap0xnoVjsqAAPyn9ZCZJEt6xkkb4csbAHY4HQuz8KrK_GpITYIIR8AGm9G2XoIYCnPoWRDCAm9XicHIuMHyVuhM4Xk-bJIot8usSQ2TN9RysvhO75z2vq_m-CNR2cZ5nIA_TB80aTYdfAcW4zly_YRCVkpVEr8ClCnVkjRsTsnj8oP49FDBNdj7cKQC5mr0tw_RW6ks9WhlGhJzrrs-dLGBFSFiCSk9iys3etRahQw&aioh=3&csuir=1&cs=0&mtid=P5O4aqevL4SUhvcP6NLxsQ4&udm=50
 
 2.What is API Authentication and Authorization
 ----------------------------------------------
