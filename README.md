@@ -30,7 +30,7 @@ These messages consist of two primary parts: Metadata (information about the dat
 
 HTTP request methods (also known as HTTP verbs) define the primary action a client wants to perform on a server-side resource. They map closely to typical CRUD (Create, Read, Update, Delete) database operations.
 
-The core HTTP methods are categorized based on their technical behaviors, specifically whether they are Safe (do not modify server state) or Idempotent (making multiple identical requests yields the same server state).
+HTTP methods are classified by three main structural properties: **Safe:** The method is strictly read-only and does not modify the server state. **Idempotent:** Making multiple identical requests results in the exact same server state as making a single request. **Cacheable:** Responses can be stored by browsers or proxies to speed up future requests.
 
 **GET**: Retrieves the current representation of a resource without altering data. Data parameters are passed directly via the URL. (Safe, Idempotent and Cacheable). Returns status codes like `200 OK` or `404 Not Found`.
 
@@ -42,47 +42,12 @@ The core HTTP methods are categorized based on their technical behaviors, specif
 
 **PATCH:** Applies partial modifications to a resource, so we need to send the fields we wish to change. (Neither safe nor idempotent, Cacheable is conditional). Often returns `200 OK` or `204 No Content`.
 
-OPTIONS: This fetches the list of supported options of resources present on the server.
+**HEAD:** Identical to a GET request, but the server returns only the headers and status line without the response body. Useful for checking file size or existence before downloading.
+
+**OPTIONS:** Queries the communication options available for a resource, returning a list of supported HTTP methods in the Allow header.
 
 ### What is the Difference Between PUT, POST, and PATCH in RESTful API
 
-### What are basic HTTP status codes
-
-200
-
-OK
-
-Successful GET, PUT, PATCH
-
-201
-
-Created
-
-Successful POST (include Location header)
-
-204
-
-No Content
-
-Successful DELETE
-
-400
-
-Bad Request
-
-Malformed syntax
-
-404
-
-Not Found
-
-Resource does not exist
-
-500
-
-Internal Server Error
-
-Server-side failure
 
 ### What is an API Endpoint and what are Parameters
 
@@ -92,7 +57,34 @@ API Endpoint is a specific digital location or URL path where an API receives re
 
 **Query Parameters:** Key-value pairs appended at the end of the URL following a ? symbol, primarily utilized to filter, sort, search, or paginate results (e.g., `/users?status=active&sort=price`).
 
-**Body / Payload Parameters:** Hidden inside the "body" of the request (often as raw text or JSON).Submits complex data or files, typically used when creating or updating something.Sent alongside a POST request to create a product
+**Body / Payload Parameters:** Hidden inside the "body" of the request (often as raw text or JSON). Submits complex data or files, typically used when creating or updating something. (e.g. Sent alongside a POST request)
+
+### What is the purpose of HTTP Headers
+
+Purpose of HTTP headers is to let clients and servers pass essential metadata and context back and forth during an internet communication.
+
+### What are HTTP Status Codes? Group them by ranges.
+
+Status codes are standardized numeric signals sent by the server indicating the explicit resolution or failure status of an HTTP request.
+
+**1xx (Informational):** Request received, continuing process.
+
+**2xx (Success):** The action was successfully received and accepted.
+- `200 OK`: Request succeeded.
+- `201 Created`: Request succeeded and a brand new resource was generated.
+  
+**3xx (Redirection):** Further client action needed to fulfill the request.
+
+**4xx (Client Error):** The request contains bad syntax or cannot be fulfilled.
+- `400 Bad Request`: Server cannot process due to apparent client payload error.
+- `401 Unauthorized`: Lacks valid authentication credentials.
+- `403 Forbidden`: Authenticated, but user lacks administrative permissions for that resource.
+- `404 Not Found`: The requested resource endpoint does not exist on the server.
+- `429 Too Many Requests`: Client has triggered rate limiting thresholds.
+
+**5xx (Server Error):** The server failed to fulfill an apparently valid request.
+- `500 Internal Server Error`: A generic error message when an unexpected server-side exception occurs.
+- `503 Service Unavailable`: Server is temporarily down for maintenance or overloaded.
 
 ### Difference between SOAP and REST API
 
@@ -104,13 +96,21 @@ REST (Representational State Transfer) and SOAP (Simple Object Access Protocol) 
 
 **Operations:** SOAP uses an interface contract defined by a WSDL file and requests typically use POST. REST uses standard HTTP methods directly (GET, POST, PUT, DELETE).
 
-**State:** Stateful or Stateless: Can store and track client interactions between requests.Stateless: Every request is entirely independent and self-contained.CachingNot supported natively: Responses cannot be cached easily.Built-in: Supports HTTP caching, significantly improving speed and efficiency.SecurityBuilt-in enterprise security standards like WS-Security (encryption and digital signatures).Relies on transport layer security (HTTPS) and token authorization (OAuth, JWT).TransactionsBuilt-in compliance for ACID transactions (highly reliable for multi-step bank transfers).Limited transactional support; managing state-heavy steps requires client-side software.PerformanceHeavier and slower: Large XML envelopes consume more bandwidth and CPU to process.Lightweight and faster: Minimal payload overhead (especially with JSON).
+**State:** SOAP can be Stateful or Stateless, can store and track client interactions between requests. REST is Stateless, every request is entirely independent and self-contained.
+
+**Caching:** SOAP does not support natively, responses cannot be cached easily. REST provides built-in support for HTTP caching, significantly improving speed and efficiency.
+
+**Security:** SOAP provides built-in enterprise security standards like WS-Security (encryption and digital signatures). REST relies on transport layer security (HTTPS) and token authorization (OAuth, JWT).
+
+**Transactions:** SOAP provides built-in compliance for ACID transactions (highly reliable for multi-step bank transfers). REST has limited transactional support; managing state-heavy steps requires client-side software.
+
+**Performance:** SOAP is heavier and slower, Large XML envelopes consume more bandwidth and CPU to process. REST is lightweight and faster, minimal payload overhead (especially with JSON).
 
 When to Use SOAPSOAP is highly structured and ideal for legacy enterprise environments. Choose SOAP for:Financial and Banking Services: Where ACID compliance is necessary to ensure transactions never fail silently or partially.High-Security Systems: Applications requiring bank-grade, end-to-end encryption and token validation via WS-Security.Stateful Operations: Systems that need to track consecutive, multi-step actions across a distributed network.🌐 When to Use RESTREST dominates the modern web because it is easy to build, scale, and consume. Choose REST for:Public Web APIs & Mobile Apps: Lightweight JSON payloads save bandwidth and process quickly on mobile devices.Microservices: Ideal for building decoupled, independent, and stateless cloud applications.Scalable Web Performance: Direct integration with HTTP allows data to be cached at the browser or CDN level, reducing server loads.
 
 https://www.google.com/search?q=Difference+between+SOAP+and+REST+API&rlz=1C5FPAB_enIN1189IN1189&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCDE3MTFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UfVcuk_CN5lZ7ooDDWHK2MvRnkJCfpKMCXqclK-P4WAh82d25jqGtbeY99CshApuFApJdhBniVRKv_-rylb_ASjcXJYoQ2hox6HVTmY1M1uLkVuRADjuugOu2Tw38WgSDDphzX2mMJEqRuZd6SsW6lkNPUO2A&aep=10&ntc=1&sxsrf=APpeQnvEXWuFxJb6PqKUc7sX1XXCOj8ylg%3A1790477912302&mstk=AUtExfBtuVtYlvqI05_B5ggjDJBzYdFDFa3xTgfqap0xnoVjsqAAPyn9ZCZJEt6xkkb4csbAHY4HQuz8KrK_GpITYIIR8AGm9G2XoIYCnPoWRDCAm9XicHIuMHyVuhM4Xk-bJIot8usSQ2TN9RysvhO75z2vq_m-CNR2cZ5nIA_TB80aTYdfAcW4zly_YRCVkpVEr8ClCnVkjRsTsnj8oP49FDBNdj7cKQC5mr0tw_RW6ks9WhlGhJzrrs-dLGBFSFiCSk9iys3etRahQw&aioh=3&csuir=1&cs=0&mtid=P5O4aqevL4SUhvcP6NLxsQ4&udm=50
 
-
+https://www.google.com/search?q=http+methods&rlz=1C5FPAB_enIN1189IN1189&gs_lcrp=EgZjaHJvbWUqDAgBEAAYDRixAxiABDIGCAAQRRg5MgwIARAAGA0YsQMYgAQyCQgCEAAYDRiABDIJCAMQABgNGIAEMgkIBBAAGA0YgAQyDAgFEAAYDRiABBi0BzIJCAYQABgNGIAEMgwIBxAAGA0YgAQYtAcyCQgIEAAYDRiABDIMCAkQABgNGIAEGLQH0gEINzc4OWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832VstEKsVDqPorK0Gahnm2nq-aQnTz_mBV-EZYISbLc-S3LQBbMYAGT8xXTqdTxRg0wGCWZztS_-z7VOJMGgRYd2KZq3hv2Rfo4RyZe39aNoaWPGhtlcktx3ih2hZdqZxzNR-0NX2A0FINB36h2jcg66YEtv3Bab-iYd-SQED29ZQNJiVjg&aep=10&ntc=1&sxsrf=APpeQnu0S5_s78BQTYZMF9YYsHtH2HOGkw%3A1790474912335&mstk=AUtExfDnREXOOYnzHzgaYheoMOrxKfMWQw8cdQS6MKSyXwuzBrj7gLgLGgKIFgXupeot8d3cEH3jKLYAoO51VjKHHnkXQKBpaXl-mUD8RMYcHHEnt9GAlZKt-xJ0aKE0IGe5GDyG-MxR6lK3_4D5N3M4IrBi50HZ3c5wtksyDHeInona7ve_pgBjF3VP0ys1pKMoEnCj_Rj37thzzBENbAxFFIY6E-CXPH8IFF0ESRA5Ap02aZf1l1mWvAKvSJR_10S4Jwt3shah1ptTxNfvycEH-dtnF9eyXuYBEVv-VQYUBrEiuf5vDr0yQ6Z3submurIfg0zKUaVQIrjWXw&aioh=3&csuir=1&cs=0&mtid=DIa4ao7JKoGcseMP1fLG8Qk&udm=50
 
 
 
