@@ -46,6 +46,54 @@ OPTIONS: This fetches the list of supported options of resources present on the 
 
 ### What is the Difference Between PUT, POST, and PATCH in RESTful API
 
+### What are basic HTTP status codes
+
+200
+
+OK
+
+Successful GET, PUT, PATCH
+
+201
+
+Created
+
+Successful POST (include Location header)
+
+204
+
+No Content
+
+Successful DELETE
+
+400
+
+Bad Request
+
+Malformed syntax
+
+404
+
+Not Found
+
+Resource does not exist
+
+500
+
+Internal Server Error
+
+Server-side failure
+
+### What is an API Endpoint and what are Parameters
+
+API Endpoint is a specific digital location or URL path where an API receives requests from a client to interact with a server, constructed by combining a Base URL (the server's root address) with a Path (the specific resource). API Parameters are the custom options or variables passed to that endpoint to give the server specific instructions on what exact data to process or return - three primary types of parameters.
+
+**Path Parameters:** Variables embedded directly within the URL path to isolate a distinct resource (e.g., `/users/101` targets user ID 101).
+
+**Query Parameters:** Key-value pairs appended at the end of the URL following a ? symbol, primarily utilized to filter, sort, search, or paginate results (e.g., `/users?status=active&sort=price`).
+
+**Body / Payload Parameters:** Hidden inside the "body" of the request (often as raw text or JSON).Submits complex data or files, typically used when creating or updating something.Sent alongside a POST request to create a product
+
 ### Difference between SOAP and REST API
 
 REST (Representational State Transfer) and SOAP (Simple Object Access Protocol) are the two most common methods for client-server communication. REST is an architectural style with flexible design guidelines, while SOAP is a official protocol with strict rules, often used in complex enterprise systems.
@@ -61,6 +109,12 @@ REST (Representational State Transfer) and SOAP (Simple Object Access Protocol) 
 When to Use SOAPSOAP is highly structured and ideal for legacy enterprise environments. Choose SOAP for:Financial and Banking Services: Where ACID compliance is necessary to ensure transactions never fail silently or partially.High-Security Systems: Applications requiring bank-grade, end-to-end encryption and token validation via WS-Security.Stateful Operations: Systems that need to track consecutive, multi-step actions across a distributed network.🌐 When to Use RESTREST dominates the modern web because it is easy to build, scale, and consume. Choose REST for:Public Web APIs & Mobile Apps: Lightweight JSON payloads save bandwidth and process quickly on mobile devices.Microservices: Ideal for building decoupled, independent, and stateless cloud applications.Scalable Web Performance: Direct integration with HTTP allows data to be cached at the browser or CDN level, reducing server loads.
 
 https://www.google.com/search?q=Difference+between+SOAP+and+REST+API&rlz=1C5FPAB_enIN1189IN1189&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCDE3MTFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UfVcuk_CN5lZ7ooDDWHK2MvRnkJCfpKMCXqclK-P4WAh82d25jqGtbeY99CshApuFApJdhBniVRKv_-rylb_ASjcXJYoQ2hox6HVTmY1M1uLkVuRADjuugOu2Tw38WgSDDphzX2mMJEqRuZd6SsW6lkNPUO2A&aep=10&ntc=1&sxsrf=APpeQnvEXWuFxJb6PqKUc7sX1XXCOj8ylg%3A1790477912302&mstk=AUtExfBtuVtYlvqI05_B5ggjDJBzYdFDFa3xTgfqap0xnoVjsqAAPyn9ZCZJEt6xkkb4csbAHY4HQuz8KrK_GpITYIIR8AGm9G2XoIYCnPoWRDCAm9XicHIuMHyVuhM4Xk-bJIot8usSQ2TN9RysvhO75z2vq_m-CNR2cZ5nIA_TB80aTYdfAcW4zly_YRCVkpVEr8ClCnVkjRsTsnj8oP49FDBNdj7cKQC5mr0tw_RW6ks9WhlGhJzrrs-dLGBFSFiCSk9iys3etRahQw&aioh=3&csuir=1&cs=0&mtid=P5O4aqevL4SUhvcP6NLxsQ4&udm=50
+
+
+
+
+
+
 
 2.What is API Authentication and Authorization
 ----------------------------------------------
