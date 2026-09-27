@@ -32,15 +32,15 @@ HTTP request methods (also known as HTTP verbs) define the primary action a clie
 
 The core HTTP methods are categorized based on their technical behaviors, specifically whether they are Safe (do not modify server state) or Idempotent (making multiple identical requests yields the same server state).
 
-**GET**: Retrieves the current representation of a resource without altering data. Data parameters are passed directly via the URL. (Safe, Idempotent and Cacheable)
+**GET**: Retrieves the current representation of a resource without altering data. Data parameters are passed directly via the URL. (Safe, Idempotent and Cacheable). Returns status codes like `200 OK` or `404 Not Found`.
 
-**POST**: Submits new data enclosed within the request body to create a new resource or trigger server-side processing. (Neither safe nor idempotent, Cacheable is conditional)
+**POST**: Submits new data enclosed within the request body to create a new resource or trigger server-side processing. (Neither safe nor idempotent, Cacheable is conditional). Often returns `201 Created` or `200 OK`.
 
-**PUT:** Replaces the entire target resource with the new request payload. If the resource doesn't exist, it creates it. (Not safe, Idempotent and Not cacheable)
+**PUT:** Replaces the entire target resource with the new request payload. If the resource doesn't exist, it creates it. (Not safe, Idempotent and Not cacheable). Often returns `200 OK` or `204 No Content`.
 
-**DELETE:**  Removes the specified resource entirely from the target server. (Not safe, Idempotent and Not cacheable)
+**DELETE:**  Removes the specified resource entirely from the target server. (Not safe, Idempotent and Not cacheable). Often returns `200 OK`, `202 Accepted`, or `204 No Content`.
 
-**PATCH:** Applies partial modifications to a resource, so we need to send the fields we wish to change. (Neither safe nor idempotent, Cacheable is conditional)
+**PATCH:** Applies partial modifications to a resource, so we need to send the fields we wish to change. (Neither safe nor idempotent, Cacheable is conditional). Often returns `200 OK` or `204 No Content`.
 
 OPTIONS: This fetches the list of supported options of resources present on the server.
 
