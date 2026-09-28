@@ -6,6 +6,7 @@ An API (Application Programming Interface) is a software intermediary that allow
 
 **How it works:** It follows a Client-Server architecture. A client sends an explicit request (payload/parameters) over a network protocol (like HTTP) to a specific endpoint. The server processes the request, communicates with a database if necessary, and returns an HTTP response containing a status code and data.
 
+---
 ### What is the difference between an API and a Web Service
 
 Primary difference is that all web services are APIs, but not all APIs are web services. A Web Service is a specific type of API that strictly requires a network connection and relies on web protocols (like HTTP or SOAP) to exchange data or to communicate between machines. An API (Application Programming Interface) is a broader umbrella term representing any interface that allows two software components to talk to each other, whether they are on the same local device or spread across the internet.
@@ -14,11 +15,12 @@ Primary difference is that all web services are APIs, but not all APIs are web s
 
 **Data Format:** API (Highly flexible. Supports JSON, XML, YAML, binary streams, or plain text), Web Service (Relies heavily on XML (especially for SOAP) or JSON for RESTful variations).
 
+---
 ### What do you understand by RESTful Web Services
 
 RESTful Web Services are a way of designing and developing web services that use REST (Representational State Transfer) principles. They enable applications to communicate over the web using standard HTTP methods, such as GET, POST, PUT and DELETE. REST is lightweight, stateless and widely used in modern web and mobile applications. 
 
-REST (Representational State Transfer) is an architectural style used to design distributed systems using the HTTP protocol. To be truly RESTful, an API must adhere to key constraints:
+REST (Representational State Transfer) is an architectural style used to design distributed systems using the HTTP protocol. **To be truly RESTful, an API must adhere to key architectural constraints:**
 
 **How RESTful Web Services Work:** 
 
@@ -26,9 +28,10 @@ REST (Representational State Transfer) is an architectural style used to design 
 
 These messages consist of two primary parts: Metadata (information about the data or the connection) and Message Data/Payload (the actual content being transferred).
 
+---
 ### What are the main HTTP methods used in REST APIs
 
-HTTP request methods (also known as HTTP verbs) define the primary action a client wants to perform on a server-side resource. They map closely to typical CRUD (Create, Read, Update, Delete) database operations.
+HTTP request methods (also known as HTTP verbs) define the primary action a client wants to perform on a server-side resource. They map closely to typical CRUD (Create, Read, Update, Delete) database operations. **Resource vs Endpoint:** resource is the data entity (user, order, product) and endpoint is the URL path that provides access to that resource.
 
 HTTP methods are classified by three main structural properties: **Safe:** The method is strictly read-only and does not modify the server state. **Idempotent:** Making multiple identical requests results in the exact same server state as making a single request. **Cacheable:** Responses can be stored by browsers or proxies to speed up future requests.
 
@@ -46,6 +49,9 @@ HTTP methods are classified by three main structural properties: **Safe:** The m
 
 **OPTIONS:** Queries the communication options available for a resource, returning a list of supported HTTP methods in the Allow header.
 
+**REST API Design Best Practices:** Use nouns and not verbs, emphasize resource itself and HTTP method acts as the verb `POST /users`/`GET /users` not `POST /createNewUser`/`GET /getAllUsers`. Use pluralized collections, collection names to be consistent throughout the API `/users/123/orders/456`. Reflect sub-resources and hierarchies, nested URLs to show clean relational paths `/users/123/orders` (fetches all orders belonging to user 123). Utilize query parameters for filtering/sorting `/users?role=developer&sort=asc`.
+
+---
 ### What is the Difference Between PUT, POST, and PATCH in RESTful API
 
 
@@ -86,6 +92,19 @@ Status codes are standardized numeric signals sent by the server indicating the 
 - `500 Internal Server Error`: A generic error message when an unexpected server-side exception occurs.
 - `503 Service Unavailable`: Server is temporarily down for maintenance or overloaded.
 
+**405 Method Not Allowed:** Server recognizes the resource URL, but the specific HTTP method/verb used is not permitted for that route. We can check the `Allow` Header, a compliant origin server must return an `Allow` header in a `405` response (e.g., Allow: GET, HEAD) to see what the endpoint actually accepts.
+
+**415 Unsupported Media Type:** Server refuses to service the request because the payload format is in an unsupported format, e.g. if endpoint only accepts `application/xml` or `multipart/form-data`, passing `application/json` will trigger this error.
+
+**Why would you use a HEAD request instead of a GET request?** Efficiency and performance. A HEAD request asks for the exact same headers that a GET request would yield, but tells the server to completely drop the response body. This saves bandwidth and processing power. Use cases:
+
+Large File Verification: Inspecting the Content-Length header before downloading a massive asset (like a multi-gigabyte ZIP file) to confirm available disk space.<br>
+Dead Link Validation: Web crawlers use `HEAD` to ping URLs and check `200 OK` availability status without pulling down page HTML markup.<br>
+Cache Invalidation: Pulling down the `Last-Modified` or `ETag` validator headers to check if local cache matches server files.
+
+**What is the primary purpose of the OPTIONS method?**
+
+---
 ### Difference between SOAP and REST API
 
 REST (Representational State Transfer) and SOAP (Simple Object Access Protocol) are the two most common methods for client-server communication. REST is an architectural style with flexible design guidelines, while SOAP is a official protocol with strict rules, often used in complex enterprise systems.
