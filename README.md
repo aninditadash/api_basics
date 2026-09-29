@@ -22,11 +22,25 @@ RESTful Web Services are a way of designing and developing web services that use
 
 REST (Representational State Transfer) is an architectural style used to design distributed systems using the HTTP protocol. **To be truly RESTful, an API must adhere to key architectural constraints:**
 
-**How RESTful Web Services Work:** 
+- **Client-Server Architecture:** The front-end user interface and the back-end data processing operate independently so that either side can change or scale without affecting the other.
+- **Statelessness:** Every single request from the client must include all the authentication tokens and data needed to complete the task; the server never remembers past client interactions.
+- **Cacheability:** Server responses must explicitly state whether the data can be saved (cached) locally by the client or intermediaries to reduce network traffic and latency.
+- **Uniform Interface:** The API must use a standard, predictable convention for naming resources and transferring data representations so any client can interact with it easily.
+- **Layered System:** The client cannot see or tell whether it is connecting directly to the origin server or an intermediary layer like a load balancer, security proxy, or API gateway.
 
-**Define Messaging in terms of RESTful web services:** Here, messaging refers to the exchange of data between a client and a server via standard HTTP protocols. Because REST is stateless, every communication transaction is fully self-contained within two types of messages: the HTTP Request (sent by the client) and the HTTP Response (returned by the server).
+**How RESTful Web Services Work:** When a client application (like a mobile app or a browser) wants to interact with a server, it sends an HTTP request. The server processes the request and sends back a "representation" of the resource's current state, usually formatted in JSON/XML.
 
-These messages consist of two primary parts: Metadata (information about the data or the connection) and Message Data/Payload (the actual content being transferred).
+**Define Messaging in terms of RESTful web services:** Here, messaging refers to the exchange of data between a client and a server via standard HTTP protocols. Because REST is stateless, every communication transaction is fully self-contained within two types of messages: the HTTP Request (sent by the client) and the HTTP Response (returned by the server). These messages consist of two primary parts: Metadata (information about the data or the connection) and Message Data/Payload (the actual content being transferred).
+
+#### Alternatives to RESTful Web Services
+
+**GraphQL:** Created by Meta, this query language lets the client specify exactly what data it needs. Instead of hitting multiple REST endpoints, a single GraphQL request fetches nested data in one go, eliminating wasted bandwidth.
+
+**gRPC:** Developed by Google, this high-performance framework uses HTTP/2 and packs data into small binary messages (Protocol Buffers) rather than text. It is significantly faster than REST, making it popular for backend microservices.
+
+**SOAP (Simple Object Access Protocol):** A formal, highly strict protocol that relies purely on XML. It includes built-in ACID compliance and heavy security standards, making it common in banking and legacy enterprise environments.
+
+**WebSockets:** Unlike REST, which closes the connection after every response, WebSockets open a single, persistent TCP connection. This allows both client and server to push messages instantly without waiting for a request, which is ideal for online gaming and live notifications.
 
 ---
 ### What are the main HTTP methods used in REST APIs
@@ -65,6 +79,7 @@ Cache Invalidation: Pulling down the `Last-Modified` or `ETag` validator headers
 ### What is the Difference Between PUT, POST, and PATCH in RESTful API
 
 
+---
 ### What is an API Endpoint and what are Parameters
 
 API Endpoint is a specific digital location or URL path where an API receives requests from a client to interact with a server, constructed by combining a Base URL (the server's root address) with a Path (the specific resource). API Parameters are the custom options or variables passed to that endpoint to give the server specific instructions on what exact data to process or return - three primary types of parameters.
@@ -75,10 +90,24 @@ API Endpoint is a specific digital location or URL path where an API receives re
 
 **Body / Payload Parameters:** Hidden inside the "body" of the request (often as raw text or JSON). Submits complex data or files, typically used when creating or updating something. (e.g. Sent alongside a POST request)
 
+---
 ### What is the purpose of HTTP Headers
 
-Purpose of HTTP headers is to let clients and servers pass essential metadata and context back and forth during an internet communication.
+Purpose of HTTP headers is to let clients and servers pass essential metadata and context back and forth during an internet communication. Main Types of Headers: **Request Headers:** Sent by the client (like a browser) to share details about its environment or preferences. **Response Headers:** Sent by the server to provide details about itself or the returned data. **General Headers:** Apply to both requests and responses without affecting the core message body. **Entity/Representation Headers:** Describe the specific contents or size of the data payload, such as `Content-Type` or `Content-Length`.
 
+#### Core Functions of HTTP Headers
+
+**Content Negotiation:** Inform servers what media types, languages, or character sets a client understands (e.g., `Accept`, `Accept-Language`).
+
+**Authentication:** Pass credentials or tokens to verify identity and allow access to protected resources (e.g., `Authorization`).
+
+**Caching Control:** Direct browsers or proxy servers on whether and how long to save a resource to save bandwidth (e.g., `Cache-Control`).
+
+**State Management:** Maintain user sessions and store state using cookies (e.g., `Set-Cookie`).
+
+**Security Policies:** Enforce secure connections and prevent vulnerabilities like clickjacking or cross-site scripting (e.g., `Strict-Transport-Security`).
+
+---
 ### What are HTTP Status Codes? Group them by ranges.
 
 Status codes are standardized numeric signals sent by the server indicating the explicit resolution or failure status of an HTTP request.
@@ -380,3 +409,9 @@ Access Token Issued: If the token request is valid, the resource server verifies
 
 Accessing Protected Resources: The client can now use the access token to make requests to the resource server's API, including the user's protected 
 resources. The resource server verifies the access token for every request, ensuring that the client has been authorized to access those resources.
+
+## Reverse Proxy
+
+
+
+
