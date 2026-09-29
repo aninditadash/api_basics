@@ -92,6 +92,26 @@ HATEOAS Workflow:
 Hit Root URL ──> Inspect Links ──> Execute Next Step ──> Inspect New Links (State Machine)
 ```
 
+**Deep Dive: Handling an Order Processing Workflow** To understand the architectural trade-offs from a system design perspective, look at how each approach handles a customer trying to cancel an order that has already entered the fulfillment phase.
+
+In an OpenAPI architecture, the frontend client application hardcodes the UI transitions and routing logic based on the schema it compiled against. If business introduces a new rule (e.g., _Orders cannot be canceled if they contain custom manufactured goods, even if the status is PENDING_), the backend database logic shifts. Backend will now reject a cancel request from the UI with a 400 Bad Request. However, the frontend UI — still operating on the outdated, static logic—will continue to display a clickable "Cancel" button to the end user until a new frontend deployment is pushed out to production.
+
+```ts
+if (order.status === 'PENDING' || order.status === 'PROCESSING') {
+    showCancelButton();
+}
+```
+
+In a HATEOAS architecture, the frontend client doesn't evaluate the order status fields to determine what actions are available. It looks exclusively at the hypermedia metadata. If the business introduces the _custom manufacturing rule_, backend updates the state machine engine on the server. When an order matches that criteria, the server simply omits the "cancel" key from the response payload's _links object. UI automatically hides the cancel button on the next refresh. No frontend code changes, re-compilations, or mobile app store redeployments are required.
+
+```ts
+if (order._links.cancel) {
+    showCancelButton(order._links.cancel.href, order._links.cancel.method);
+}
+```
+
+**State Machine:** is the backend business logic that governs the lifecycle of a resource — meaning it dictates what status a resource can have and what actions are legally allowed at any given moment. Instead of tracking state inside code with messy if/else statements, enterprises use a formal state machine to ensure data consistency. Core Components of the State Machine: _States (The "Where"):_ The valid conditions a resource can live in (e.g., Pending, Paid, Shipped, Cancelled). _Transitions (The "How"):_ The allowed movements between states (e.g., An order can move from Pending to Paid, but it cannot move directly from Cancelled to Shipped). _Actions (The Triggers):_ The API calls or events that trigger a transition (e.g., POST /payments triggers the transition to Paid).
+
 ---
 ### What are the main HTTP methods used in REST APIs
 
