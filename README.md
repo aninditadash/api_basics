@@ -51,6 +51,16 @@ HTTP methods are classified by three main structural properties: **Safe:** The m
 
 **REST API Design Best Practices:** Use nouns and not verbs, emphasize resource itself and HTTP method acts as the verb `POST /users`/`GET /users` not `POST /createNewUser`/`GET /getAllUsers`. Use pluralized collections, collection names to be consistent throughout the API `/users/123/orders/456`. Reflect sub-resources and hierarchies, nested URLs to show clean relational paths `/users/123/orders` (fetches all orders belonging to user 123). Utilize query parameters for filtering/sorting `/users?role=developer&sort=asc`.
 
+**Why would you use a HEAD request instead of a GET request?** Efficiency and performance. A HEAD request asks for the exact same headers that a GET request would yield, but tells the server to completely drop the response body. This saves bandwidth and processing power. Use cases:
+
+Large File Verification: Inspecting the Content-Length header before downloading a massive asset (like a multi-gigabyte ZIP file) to confirm available disk space.<br>
+Dead Link Validation: Web crawlers use `HEAD` to ping URLs and check `200 OK` availability status without pulling down page HTML markup.<br>
+Cache Invalidation: Pulling down the `Last-Modified` or `ETag` validator headers to check if local cache matches server files.
+
+**What is the primary purpose of the OPTIONS method?** It acts as a discovery mechanism. It allows a client to query a web server to determine which HTTP methods, custom headers, and configurations are supported for a specific URL without triggering any backend business logic.
+
+**What is a CORS "Preflight Request" and how does OPTIONS relate to it?** When a web application attempts a cross-origin request that could modify data (like a POST with a JSON payload or a DELETE request), browsers automatically send a "preflight" request using the OPTIONS method ahead of time. The browser evaluates the server's response headers (like Access-Control-Allow-Origin and Access-Control-Allow-Methods) to verify if the cross-origin operation is safely permitted before executing the actual intended request.
+
 ---
 ### What is the Difference Between PUT, POST, and PATCH in RESTful API
 
@@ -95,14 +105,6 @@ Status codes are standardized numeric signals sent by the server indicating the 
 **405 Method Not Allowed:** Server recognizes the resource URL, but the specific HTTP method/verb used is not permitted for that route. We can check the `Allow` Header, a compliant origin server must return an `Allow` header in a `405` response (e.g., Allow: GET, HEAD) to see what the endpoint actually accepts.
 
 **415 Unsupported Media Type:** Server refuses to service the request because the payload format is in an unsupported format, e.g. if endpoint only accepts `application/xml` or `multipart/form-data`, passing `application/json` will trigger this error.
-
-**Why would you use a HEAD request instead of a GET request?** Efficiency and performance. A HEAD request asks for the exact same headers that a GET request would yield, but tells the server to completely drop the response body. This saves bandwidth and processing power. Use cases:
-
-Large File Verification: Inspecting the Content-Length header before downloading a massive asset (like a multi-gigabyte ZIP file) to confirm available disk space.<br>
-Dead Link Validation: Web crawlers use `HEAD` to ping URLs and check `200 OK` availability status without pulling down page HTML markup.<br>
-Cache Invalidation: Pulling down the `Last-Modified` or `ETag` validator headers to check if local cache matches server files.
-
-**What is the primary purpose of the OPTIONS method?**
 
 ---
 ### Difference between SOAP and REST API
