@@ -117,7 +117,9 @@ if (order._links.cancel) {
 
 HTTP request methods (also known as HTTP verbs) define the primary action a client wants to perform on a server-side resource. They map closely to typical CRUD (Create, Read, Update, Delete) database operations. **Resource vs Endpoint:** resource is the data entity (user, order, product) and endpoint is the URL path that provides access to that resource.
 
-HTTP methods are classified by three main structural properties: **Safe:** The method is strictly read-only and does not modify the server state. **Idempotent:** Making multiple identical requests results in the exact same server state as making a single request. **Cacheable:** Responses can be stored by browsers or proxies to speed up future requests.
+HTTP methods are classified by three main structural properties: **Safe:** The method is strictly read-only and does not modify the server state. 
+
+**Idempotent:** Making multiple identical requests results in the exact same server state as making a single request. **Cacheable:** Responses can be stored by browsers or proxies to speed up future requests.
 
 **GET**: Retrieves the current representation of a resource without altering data. Data parameters are passed directly via the URL. (Safe, Idempotent and Cacheable). Returns status codes like `200 OK` or `404 Not Found`.
 
@@ -166,19 +168,17 @@ API Endpoint is a specific digital location or URL path where an API receives re
 ---
 ### What is the purpose of HTTP Headers
 
-Purpose of HTTP headers is to let clients and servers pass essential metadata and context back and forth during an internet communication. Main Types of Headers: **Request Headers:** Sent by the client (like a browser) to share details about its environment or preferences. **Response Headers:** Sent by the server to provide details about itself or the returned data. **General Headers:** Apply to both requests and responses without affecting the core message body. **Entity/Representation Headers:** Describe the specific contents or size of the data payload, such as `Content-Type` or `Content-Length`.
+Purpose of HTTP headers is to let clients and servers pass essential metadata and context back and forth during an internet communication. Main Types of Headers: **Request Headers:** Sent by the client (like a browser) to share details about its environment or preferences. **Response Headers:** Sent by the server to provide details about itself or the returned data. **General Headers:** Apply to both requests and responses without affecting the core message body. **Entity/Representation Headers:** Describe the specific contents or size of the data payload, such as `Content-Type` or `Content-Length`. Core Functions of HTTP Headers:
 
-#### Core Functions of HTTP Headers
-
-**Content Negotiation:** Inform servers what media types, languages, or character sets a client understands (e.g., `Accept`, `Accept-Language`).
-
-**Authentication:** Pass credentials or tokens to verify identity and allow access to protected resources (e.g., `Authorization`).
-
-**Caching Control:** Direct browsers or proxy servers on whether and how long to save a resource to save bandwidth (e.g., `Cache-Control`).
-
-**State Management:** Maintain user sessions and store state using cookies (e.g., `Set-Cookie`).
-
-**Security Policies:** Enforce secure connections and prevent vulnerabilities like clickjacking or cross-site scripting (e.g., `Strict-Transport-Security`).
+- **Content Negotiation:** Inform servers what media types, languages, or character sets a client understands (e.g., `Accept`, `Accept-Language`), so it allows clients to request different representations of a resource.
+```
+Accept: application/json    → Server returns JSON
+Accept: application/xml     → Server returns XML
+```
+- **Authentication:** Pass credentials or tokens to verify identity and allow access to protected resources (e.g., `Authorization`).
+- **Caching Control:** Direct browsers or proxy servers on whether and how long to save a resource to save bandwidth (e.g., `Cache-Control`).
+- **State Management:** Maintain user sessions and store state using cookies (e.g., `Set-Cookie`).
+- **Security Policies:** Enforce secure connections and prevent vulnerabilities like clickjacking or cross-site scripting (e.g., `Strict-Transport-Security`).
 
 ---
 ### What are HTTP Status Codes? Group them by ranges.
