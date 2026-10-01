@@ -251,6 +251,40 @@ Cacheability: Responses from the server must define whether they can be cached. 
 Layered Architecture: A REST service can work through multiple layers—such as load balancers, API gateways, proxy servers, and rate limiters—without the client knowing. These layers distribute traffic efficiently and protect core servers from getting overloaded.
 
 ---
+### API pagination: Best Practices and Strategies
+
+**Offset and Limit Pagination:** involves using two parameters: offset and limit. `offset` parameter determines the starting point or position in the dataset, `limit` parameter specifies the maximum number of records to include on each page. `GET /api/posts?offset=0&limit=10` -> retrieve the first 10 records
+
+**Cursor-Based Pagination:** Instead of relying on numeric offsets, cursor-based pagination uses a unique identifier or token to mark the position in the dataset. The API consumer includes the cursor value in subsequent requests to fetch the next page of data. This approach ensures stability when new data is added or existing data is modified. The cursor can be based on various criteria, such as a timestamp, a primary key, or an encoded representation of the record. `GET /api/posts?cursor=eyJpZCI6MX0` -> here, cursor value eyJpZCI6MX0 represents the identifier of the last fetched record. This request retrieves the next page of posts after that specific cursor.
+
+**Page-Based Pagination:** involves using a "page" parameter to specify the desired page number. The API consumer requests a specific page of data, and the API responds with the corresponding page, typically along with metadata such as the total number of pages or total record count. Simplifies navigation and is often combined with other parameters like "limit" to determine the number of records per page. `GET /api/posts?page=2&limit=20` ->
+here, we are requesting second page, where each page contains 20 posts.
+
+Always include Pagination Metadata in API Responses.
+```json
+{
+ "data": [
+   {
+     "id": 1,
+     "title": "Post 1",
+   }
+ ],
+ "pagination": {
+   "total_records": 100,
+   "current_page": 1,
+   "total_pages": 10,
+   "next_page": 2,
+   "prev_page": null
+ }
+}
+```
+
+https://www.google.com/search?q=How+do+you+implement+pagination&rlz=1C5FPAB_enIN1189IN1189&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIKCAEQABiABBi0BzIKCAIQABiABBi0BzIICAMQABgWGB4yCAgEEAAYFhgeMggIBRAAGBYYHjIICAYQABgWGB4yCAgHEAAYFhgeMggICBAAGBYYHjIICAkQABgWGB7SAQcyMTBqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8cxpBkeIeqYwoCbfNVc4vKE7plZzta63Pe5DpJ3XFR9XzxI1gxDxLun-GtPKavu3kEzJNGNBebw1A_XeIxzHPdHc5gGlqeYRrsKc2k_QKKK6kt-AjhNNP6r-v8YZTEDEFOHvz2lLpCCJUsUbach_pOXsAYdFRjnayctnF5WfiXo-KcdTL6sQuPlkZ9Qwpf2Q9WDTqyBw&aep=10&ntc=1&sxsrf=APpeQnt-aoOoeUy_Oou5c5x0WJ92rbYFzA%3A1790690535329&mstk=AUtExfD7DDW0xJCGCSrA-8jXvZme4d30afDCHKj0YkUEs0vab1oKBydH1l0oBFqBnqNWAqr4uW08V6yfoi9rU1zF5PP1xmbY9hhiCmgHY8rXgDc7vMWw_UMlaOu7CZosSGSqSRbCTiWqP61pdzeYW6k-tqd261-Kh6L2sF1GUgl4ear3XTWkXIPWx6q4Qo6HE6UkzmcfpO_wpJVgrSyR-cbeqI8Pv91zyoSd6dID737uy-HkXif9_4FeZKUlZHsHP9eC1ILMy7gd42MVmFeHQePn5hhvDauYSORRpMNzZ9TXx7dJ4gwMrKxz0HrdysB6A1OVeDRknURObSeNuw&aioh=3&csuir=1&cs=0&mtid=efm9auTEHaP3seMP0IfpUA&udm=50
+
+---
+### What are common API versioning strategies
+
+---
 ### What are the best practices to develop RESTful web services.
 
 
