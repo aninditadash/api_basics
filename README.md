@@ -129,9 +129,9 @@ HTTP methods are classified by three main structural properties: **Safe:** The m
 
 **PUT:** Replaces the entire target resource with the new request payload. If the resource doesn't exist, it creates it. (Not safe, Idempotent and Not cacheable). Often returns `200 OK` or `204 No Content`.
 
-**DELETE:**  Removes the specified resource entirely from the target server. (Not safe, Idempotent and Not cacheable). Often returns `200 OK`, `202 Accepted`, or `204 No Content`.
-
 **PATCH:** Applies partial modifications to a resource, so we need to send the fields we wish to change. (Neither safe nor idempotent, Cacheable is conditional). Often returns `200 OK` or `204 No Content`.
+
+**DELETE:**  Removes the specified resource entirely from the target server. (Not safe, Idempotent and Not cacheable). Often returns `200 OK`, `202 Accepted`, or `204 No Content`.
 
 **HEAD:** Identical to a GET request, but the server returns only the headers and status line without the response body. Useful for checking file size or existence before downloading.
 
@@ -151,10 +151,6 @@ It acts as a discovery mechanism. It allows a client to query a web server to de
 
 **What is a CORS "Preflight Request" and how does OPTIONS relate to it?** <br>
 When a web application attempts a cross-origin request that could modify data (like a POST with a JSON payload or a DELETE request), browsers automatically send a "preflight" request using the OPTIONS method ahead of time. The browser evaluates the server's response headers (like Access-Control-Allow-Origin and Access-Control-Allow-Methods) to verify if the cross-origin operation is safely permitted before executing the actual intended request.
-
----
-### What is the Difference Between PUT, POST, and PATCH in RESTful API
-
 
 ---
 ### What is an API Endpoint and what are Parameters
@@ -213,12 +209,12 @@ Status codes are standardized numeric signals sent by the server indicating the 
 ---
 ### What constitutes the core components of HTTP Request and HTTP Response.
 
-HTTP Request has 5 main components: HTTP Method. Request Target (URI/URL) - path or endpoint identifying the specific resource on the server (e.g., `/index.html` or `/api/v1/users`). HTTP Version - indicates exact protocol version being used so the server knows how to structure its reply (e.g., HTTP/1.1 or HTTP/2). Request Header - has details of the request metadata e.g. `Host` (domain name of server), `User-Agent` (the browser or app making the request), `Accept` (type of data the client can handle), and `Authorization` (credentials for secure routes). Request Body (Payload) - actual message content to be sent to the server, data can be formatted as JSON, XML, or standard form data, which is defined by the `Content-Type` header.
+**HTTP Request has 5 main components:** HTTP Method. Request Target (URI/URL) - path or endpoint identifying the specific resource on the server (e.g., `/index.html` or `/api/v1/users`). HTTP Version - indicates exact protocol version being used so the server knows how to structure its reply (e.g., HTTP/1.1 or HTTP/2). Request Header - has details of the request metadata e.g. `Host` (domain name of server), `User-Agent` (the browser or app making the request), `Accept` (type of data the client can handle), and `Authorization` (credentials for secure routes). Request Body (Payload) - actual message content to be sent to the server, data can be formatted as JSON, XML, or standard form data, which is defined by the `Content-Type` header.
 
-HTTP Response has 4 main components: Response Status Code − represents server response status code for the requested resource (e.g. 400 Bad Request, 200 OK). HTTP Version - matches the protocol version utilized by the server. Response Header − has metadata of the response message e.g. `Content-Type` (tells the browser if it's receiving HTML, JSON, an image, etc.), `Content-Length` (the size of the response body), `Server` (information about the hosting software), and `Set-Cookie` (instructs the browser to store a tracking or session cookie). Response Body − optional main payload containing actual data requested by the client e.g. raw HTML code for a webpage, a JSON data object from an API, or binary file data (like an image or a PDF).
+**HTTP Response has 4 main components:** Response Status Code − represents server response status code for the requested resource (e.g. 400 Bad Request, 200 OK). HTTP Version - matches the protocol version utilized by the server. Response Header − has metadata of the response message e.g. `Content-Type` (tells the browser if it's receiving HTML, JSON, an image, etc.), `Content-Length` (the size of the response body), `Server` (information about the hosting software), and `Set-Cookie` (instructs the browser to store a tracking or session cookie). Response Body − optional main payload containing actual data requested by the client e.g. raw HTML code for a webpage, a JSON data object from an API, or binary file data (like an image or a PDF).
 
 ---
-### Difference between SOAP and REST API
+### Difference between SOAP and REST API.
 
 REST (Representational State Transfer) and SOAP (Simple Object Access Protocol) are the two most common methods for client-server communication. REST is an architectural style with flexible design guidelines, while SOAP is a official protocol with strict rules, often used in complex enterprise systems.
 
@@ -245,15 +241,27 @@ SOAP is highly structured and ideal for legacy enterprise environments. Usecases
 REST dominates the modern web because it is easy to build, scale, and consume. Usecases: _Public Web APIs & Mobile Apps_ where lightweight JSON payloads save bandwidth and process quickly on mobile devices. _Microservices_ which is ideal for building decoupled, independent, and stateless cloud applications. _Scalable Web Performance_ where direct integration with HTTP allows data to be cached at the browser or CDN level, reducing server loads.
 
 ---
+### What makes REST services to be easily scalable.
+
+REST services are easily scalable primarily because of their stateless nature, client-server decoupling, and caching capabilities. 
+
+Statelessness: Since, the server does not store any user session data or context between requests and every single request from a client contains all the information needed to process it, this allows a load balancer to send any request to any available server instance, making horizontal scaling (adding more servers) simple.<br>
+Client-Server Decoupling: Since front-end user interface and the back-end data processing are completely separate, they can be update, rebuild, or scaled independently without breaking the system.<br>
+Cacheability: Responses from the server must define whether they can be cached. Clients or intermediary proxy servers can store frequently requested data locally. This reduces network congestion and prevents repetitive, heavy database queries.<br>
+Layered Architecture: A REST service can work through multiple layers—such as load balancers, API gateways, proxy servers, and rate limiters—without the client knowing. These layers distribute traffic efficiently and protect core servers from getting overloaded.
+
+---
+### What are the best practices to develop RESTful web services.
+
+
+
+---
 
 https://www.google.com/search?q=Difference+between+SOAP+and+REST+API&rlz=1C5FPAB_enIN1189IN1189&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCDE3MTFqMGo3qAIAsAIA&sourceid=chrome&ie=UTF-8&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832cSpkWkfSwsmpNIrD_OQ-UfVcuk_CN5lZ7ooDDWHK2MvRnkJCfpKMCXqclK-P4WAh82d25jqGtbeY99CshApuFApJdhBniVRKv_-rylb_ASjcXJYoQ2hox6HVTmY1M1uLkVuRADjuugOu2Tw38WgSDDphzX2mMJEqRuZd6SsW6lkNPUO2A&aep=10&ntc=1&sxsrf=APpeQnvEXWuFxJb6PqKUc7sX1XXCOj8ylg%3A1790477912302&mstk=AUtExfBtuVtYlvqI05_B5ggjDJBzYdFDFa3xTgfqap0xnoVjsqAAPyn9ZCZJEt6xkkb4csbAHY4HQuz8KrK_GpITYIIR8AGm9G2XoIYCnPoWRDCAm9XicHIuMHyVuhM4Xk-bJIot8usSQ2TN9RysvhO75z2vq_m-CNR2cZ5nIA_TB80aTYdfAcW4zly_YRCVkpVEr8ClCnVkjRsTsnj8oP49FDBNdj7cKQC5mr0tw_RW6ks9WhlGhJzrrs-dLGBFSFiCSk9iys3etRahQw&aioh=3&csuir=1&cs=0&mtid=P5O4aqevL4SUhvcP6NLxsQ4&udm=50
 
 https://www.google.com/search?q=http+methods&rlz=1C5FPAB_enIN1189IN1189&gs_lcrp=EgZjaHJvbWUqDAgBEAAYDRixAxiABDIGCAAQRRg5MgwIARAAGA0YsQMYgAQyCQgCEAAYDRiABDIJCAMQABgNGIAEMgkIBBAAGA0YgAQyDAgFEAAYDRiABBi0BzIJCAYQABgNGIAEMgwIBxAAGA0YgAQYtAcyCQgIEAAYDRiABDIMCAkQABgNGIAEGLQH0gEINzc4OWowajeoAgCwAgA&sourceid=chrome&ie=UTF-8&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832VstEKsVDqPorK0Gahnm2nq-aQnTz_mBV-EZYISbLc-S3LQBbMYAGT8xXTqdTxRg0wGCWZztS_-z7VOJMGgRYd2KZq3hv2Rfo4RyZe39aNoaWPGhtlcktx3ih2hZdqZxzNR-0NX2A0FINB36h2jcg66YEtv3Bab-iYd-SQED29ZQNJiVjg&aep=10&ntc=1&sxsrf=APpeQnu0S5_s78BQTYZMF9YYsHtH2HOGkw%3A1790474912335&mstk=AUtExfDnREXOOYnzHzgaYheoMOrxKfMWQw8cdQS6MKSyXwuzBrj7gLgLGgKIFgXupeot8d3cEH3jKLYAoO51VjKHHnkXQKBpaXl-mUD8RMYcHHEnt9GAlZKt-xJ0aKE0IGe5GDyG-MxR6lK3_4D5N3M4IrBi50HZ3c5wtksyDHeInona7ve_pgBjF3VP0ys1pKMoEnCj_Rj37thzzBENbAxFFIY6E-CXPH8IFF0ESRA5Ap02aZf1l1mWvAKvSJR_10S4Jwt3shah1ptTxNfvycEH-dtnF9eyXuYBEVv-VQYUBrEiuf5vDr0yQ6Z3submurIfg0zKUaVQIrjWXw&aioh=3&csuir=1&cs=0&mtid=DIa4ao7JKoGcseMP1fLG8Qk&udm=50
 
-
-
-
-
+---
 2.What is API Authentication and Authorization
 ----------------------------------------------
 Authentication is the process of verifying the identity of a user or client making a request to a Web API, while authorization is the process of determining 
