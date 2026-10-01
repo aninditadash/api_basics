@@ -20,6 +20,8 @@ Primary difference is that all web services are APIs, but not all APIs are web s
 
 RESTful Web Services are a way of designing and developing web services that use REST (Representational State Transfer) principles. They enable applications to communicate over the web using standard HTTP methods, such as GET, POST, PUT and DELETE. REST is lightweight, stateless and widely used in modern web and mobile applications. How RESTful Web Services Work: When a client application (like a mobile app or a browser) wants to interact with a server, it sends an HTTP request. The server processes the request and sends back a "representation" of the resource's current state, usually formatted in JSON/XML.
 
+Addressing is the process of locating a single/multiple resources that are present on the server. This task is accomplished by making use of URI (Uniform Resource Identifier). General format of URI: `<protocol>://<application-name>/<type-of-resource>/<id-of-resource>`. `<protocol>`: specifies how data is transferred (e.g., http, https, ftp), `<application-name>`: represents domain name or host where service lives (e.g., ://spotify.com, github.com), `<type-of-resource>`: collection or category of data we want to access.
+
 REST (Representational State Transfer) is an architectural style used to design distributed systems using the HTTP protocol. **To be truly RESTful, an API must adhere to key architectural constraints:**
 
 - **Client-Server Architecture:** The front-end user interface and the back-end data processing operate independently so that either side can change or scale without affecting the other.
@@ -207,6 +209,13 @@ Status codes are standardized numeric signals sent by the server indicating the 
 `405 Method Not Allowed:` Server recognizes the resource URL, but the specific HTTP method/verb used is not permitted for that route. We can check the `Allow` Header, a compliant origin server must return an `Allow` header in a `405` response (e.g., Allow: GET, HEAD) to see what the endpoint actually accepts.
 
 `415 Unsupported Media Type:` Server refuses to service the request because the payload format is in an unsupported format, e.g. if endpoint only accepts `application/xml` or `multipart/form-data`, passing `application/json` will trigger this error.
+
+---
+### What constitutes the core components of HTTP Request and HTTP Response.
+
+HTTP Request has 5 main components: HTTP Method. Request Target (URI/URL) - path or endpoint identifying the specific resource on the server (e.g., `/index.html` or `/api/v1/users`). HTTP Version - indicates exact protocol version being used so the server knows how to structure its reply (e.g., HTTP/1.1 or HTTP/2). Request Header - has details of the request metadata e.g. `Host` (domain name of server), `User-Agent` (the browser or app making the request), `Accept` (type of data the client can handle), and `Authorization` (credentials for secure routes). Request Body (Payload) - actual message content to be sent to the server, data can be formatted as JSON, XML, or standard form data, which is defined by the `Content-Type` header.
+
+HTTP Response has 4 main components: Response Status Code − represents server response status code for the requested resource (e.g. 400 Bad Request, 200 OK). HTTP Version - matches the protocol version utilized by the server. Response Header − has metadata of the response message e.g. `Content-Type` (tells the browser if it's receiving HTML, JSON, an image, etc.), `Content-Length` (the size of the response body), `Server` (information about the hosting software), and `Set-Cookie` (instructs the browser to store a tracking or session cookie). Response Body − optional main payload containing actual data requested by the client e.g. raw HTML code for a webpage, a JSON data object from an API, or binary file data (like an image or a PDF).
 
 ---
 ### Difference between SOAP and REST API
