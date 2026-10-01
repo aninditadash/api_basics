@@ -199,7 +199,7 @@ Status codes are standardized numeric signals sent by the server indicating the 
 - `429 Too Many Requests`: Client has triggered rate limiting thresholds.
 
 **5xx (Server Error):** The server failed to fulfill an apparently valid request.
-- `500 Internal Server Error`: A generic error message when an unexpected server-side exception occurs.
+- `500 Internal Server Error`: A generic error message when an unexpected server-side exception occurs. It is a catch-all server-side error. The server knows something went wrong, but it cannot pinpoint the exact cause. Programmers do not explicitly return a 500 error on purpose; it happens when code or configuration fails unexpectantly.
 - `503 Service Unavailable`: Server is temporarily down for maintenance or overloaded.
 
 `405 Method Not Allowed:` Server recognizes the resource URL, but the specific HTTP method/verb used is not permitted for that route. We can check the `Allow` Header, a compliant origin server must return an `Allow` header in a `405` response (e.g., Allow: GET, HEAD) to see what the endpoint actually accepts.
